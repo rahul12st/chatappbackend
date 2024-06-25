@@ -4,7 +4,7 @@ import OpenAI from "openai";
 import dotenv from 'dotenv';
 dotenv.config();
 const openai = new OpenAI({
-  apiKey: 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,
+  apiKey: "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",
 });
 const app = express();
 app.use(cors());
