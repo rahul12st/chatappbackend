@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 app.post("/chat", async (req, res) => {
   try {
     const prompt = req.body.prompt;
-res.status(200).send("Welcome to the AI server!");
+
     const response = await openai.completions.create({
       model: "gpt-3.5-turbo-instruct",
       prompt: `${prompt}`,
