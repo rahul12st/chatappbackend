@@ -1,17 +1,27 @@
 import express from "express";
 import cors from "cors";
-import OpenAI from "openai";
+import { Configuration, OpenAIApi } from "openai";
 import dotenv from 'dotenv';
+
+// Load environment variables from .env file
 dotenv.config();
 
-const openai = new OpenAI({
-  apiKey: ssk-proj-SJpklgYjUEvoTi3SMeiWT3BlbkFJoYFlyxNCJcMMHeh9ZcDo, // Use environment variable for API key
+if (!process.env.OPENAI_API_KEY) {
+  console.error("Error: Missing environment variable OPENAI_API_KEY");
+  process.exit(1); // Exit the application with an error code
+}
+
+// Initialize OpenAI with the API key
+const configuration = new Configuration({
+  apiKey: "ssk-proj-SJpklgYjUEvoTi3SMeiWT3BlbkFJoYFlyxNCJcMMHeh9ZcDo",
 });
+const openai = new OpenAIApi(configuration);
 
 const app = express();
 
+// Configure CORS
 app.use(cors({
-  origin: "https://linea-gpt.vercel.app",
+  origin: "https://anoncounsel.vercel.app", // Update this to your frontend's origin
   methods: ["POST", "GET"],
   credentials: true
 }));
@@ -28,14 +38,10 @@ app.post("/chat", async (req, res) => {
   try {
     const { prompt } = req.body;
 
+    // Make a request to the OpenAI API
     const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo-instruct",
+      model: "gpt-4", // Use the appropriate model
       messages: [{ role: "user", content: prompt }],
-      temperature: 1.0,
-      max_tokens: 150,
-      top_p: 1,
-      frequency_penalty: 0.5,
-      presence_penalty: 0,
     });
 
     res.status(200).send({
