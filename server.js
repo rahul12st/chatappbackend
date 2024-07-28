@@ -57,5 +57,5 @@ app.listen(port, () => {
 //end
 
 app.listen(4000, () =>
-  console.log("AI server started on https://linea-gpt.vercel.app/")
+  console.log("AI server started on https://anoncounsel.vercel.app/")
 );
