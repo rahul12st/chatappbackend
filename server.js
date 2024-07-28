@@ -7,7 +7,11 @@ const openai = new OpenAI({
   apiKey: ssk-proj-SJpklgYjUEvoTi3SMeiWT3BlbkFJoYFlyxNCJcMMHeh9ZcDo,
 });
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "https://linea-gpt.vercel.app",
+    methods: ["POST","GET"],
+    credentials: true
+  }));
 app.use(express.json());
 
 app.get("/get", async (req, res) => {
