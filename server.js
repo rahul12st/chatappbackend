@@ -24,6 +24,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to the AI server!");
+   res.status(200).send(process.env.OPENAI_API_KEY);
 });
 
 app.post("/chat", async (req, res) => {
