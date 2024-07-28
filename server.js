@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 
 app.post("/chat", async (req, res) => {
   try {
-    const prompt = req.body.prompt;
+    const userPrompt = req.body.prompt;
  const prompt = `As a mental health advisor, respond empathetically to the following question: "${userPrompt}"`;
     const response = await openai.completions.create({
       model: "gpt-3.5-turbo-instruct",
