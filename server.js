@@ -11,7 +11,7 @@ if (process.env.OPENAI_API_KEY === undefined) {
   // process.exit(1); // Exit the application with an error code
 }
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY ,
+  apiKey:'ssk-proj-SJpklgYjUEvoTi3SMeiWT3BlbkFJoYFlyxNCJcMMHeh9ZcDo',
 });
 
 const app = express();
