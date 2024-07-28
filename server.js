@@ -3,15 +3,19 @@ import cors from "cors";
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 dotenv.config();
+
 const openai = new OpenAI({
-  apiKey: ssk-proj-SJpklgYjUEvoTi3SMeiWT3BlbkFJoYFlyxNCJcMMHeh9ZcDo,
+  apiKey: ssk-proj-SJpklgYjUEvoTi3SMeiWT3BlbkFJoYFlyxNCJcMMHeh9ZcDo, // Use environment variable for API key
 });
+
 const app = express();
+
 app.use(cors({
-    origin: "https://linea-gpt.vercel.app",
-    methods: ["POST","GET"],
-    credentials: true
-  }));
+  origin: "https://linea-gpt.vercel.app",
+  methods: ["POST", "GET"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.get("/get", async (req, res) => {
@@ -22,11 +26,11 @@ app.get("/get", async (req, res) => {
 
 app.post("/chat", async (req, res) => {
   try {
-    const prompt = req.body.prompt;
+    const { prompt } = req.body;
 
-    const response = await openai.completions.create({
+    const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo-instruct",
-      prompt: `${prompt}`,
+      messages: [{ role: "user", content: prompt }],
       temperature: 1.0,
       max_tokens: 150,
       top_p: 1,
@@ -35,14 +39,15 @@ app.post("/chat", async (req, res) => {
     });
 
     res.status(200).send({
-      bot: response.choices[0].text,
+      bot: response.data.choices[0].message.content,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send(error || "Something went wrong");
+    res.status(500).send(error.message || "Something went wrong");
   }
 });
 
-app.listen(4000, () =>
-  console.log("AI server started on https://linea-gpt.vercel.app/")
-);
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log(`AI server started on port ${port}`);
+});
